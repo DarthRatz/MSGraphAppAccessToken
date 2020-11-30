@@ -8,18 +8,15 @@ This is a sample on how to use the Microsoft Graph JavaScript SDK with Applicati
 
 2. Clone this repository
 
-3. Run ```npm install``` to install dependencies
+3. Run `npm install` to install dependencies
 
-4. Run ```tsc --build``` to compile to JavaScript in to _dist_ folder
+4. Run `tsc --build` to compile to JavaScript in to _dist_ folder
 
 5. Create an _.env_ file in the _dist_ folder and place the following inside (with your app details):
 
-    **MicrosoftAppId**="_Azure AD App Id_"
-    
-    **MicrosoftAppPassword**="_Azure AD App Secret_"
-    
-    **MicrosoftAppTenantId**="_Azure AD Tenant Id_"
-  
-  6. Run ```npm start``` to run the script
-  ![](https://www.lee-ford.co.uk/images/graph-sdk-app-permissions/get-users.png)
-  
+   **MicrosoftAppId**="_Azure AD App Id_"
+   **MicrosoftAppPassword**="_Azure AD App Secret_"
+   **MicrosoftAppTenantId**="_Azure AD Tenant Id_"
+
+6. Run `npm start` to run the script
+   !["example"](https://www.lee-ford.co.uk/images/graph-sdk-app-permissions/get-users.png)

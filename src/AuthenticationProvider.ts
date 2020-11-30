@@ -1,40 +1,42 @@
 import { AuthenticationProvider } from "@microsoft/microsoft-graph-client";
-import * as qs from "qs";
-import axios from "axios"
+import axios from "axios";
+import { stringify } from "qs";
 
-export class ClientCredentialAuthenticationProvider implements AuthenticationProvider {
+interface OathToken {
+  client_id: string;
+  client_secret: string;
+  scope: string;
+  grant_type: string;
+}
 
-    public async getAccessToken(): Promise<string> {
+export class ClientCredentialAuthenticationProvider
+  implements AuthenticationProvider {
+  public async getAccessToken(): Promise<string> {
+    const MicrosoftAppDetails = {
+      AppId: "MicrosoftAppId",
+      Password: "MicrosoftAppPassword",
+      TenantId: "MicrosoftAppTenantId",
+    };
 
-        const url: string = "https://login.microsoftonline.com/" + process.env.MicrosoftAppTenantId + "/oauth2/v2.0/token";
+    const url: string = `https://login.microsoftonline.com/${MicrosoftAppDetails.TenantId}/oauth2/v2.0/token`;
 
-        const body: object = {
-            client_id: process.env.MicrosoftAppId,
-            client_secret: process.env.MicrosoftAppPassword,
-            scope: "https://graph.microsoft.com/.default",
-            grant_type: "client_credentials"
-        }
+    const body: OathToken = {
+      client_id: MicrosoftAppDetails.AppId,
+      client_secret: MicrosoftAppDetails.Password,
+      scope: "https://graph.microsoft.com/.default",
+      grant_type: "client_credentials",
+    };
 
-        try {
+    try {
+      let response = await axios.post(url, stringify(body));
 
-            let response = await axios.post(url, qs.stringify(body))
-
-            if (response.status == 200) {
-
-                return response.data.access_token;
-
-            } else {
-
-                throw new Error("Non 200OK response on obtaining token...")
-
-            }
-
-        }
-        catch (error) {
-
-            throw new Error("Error on obtaining token...")
-
-        }
-
+      if (response.status === 200) {
+        return response.data.access_token;
+      } else {
+        throw new Error("Non 200OK response on obtaining token...");
+      }
+    } catch (error) {
+      throw new Error("Error on obtaining token...");
     }
+  }
 }
