@@ -1,6 +1,8 @@
 import { AuthenticationProvider } from "@microsoft/microsoft-graph-client";
 import axios from "axios";
 import { stringify } from "qs";
+import { MicrosoftAppDetails } from "./MicrosoftAppDetails";
+require("isomorphic-fetch");
 
 interface OathToken {
   client_id: string;
@@ -12,12 +14,6 @@ interface OathToken {
 export class ClientCredentialAuthenticationProvider
   implements AuthenticationProvider {
   public async getAccessToken(): Promise<string> {
-    const MicrosoftAppDetails = {
-      AppId: "MicrosoftAppId",
-      Password: "MicrosoftAppPassword",
-      TenantId: "MicrosoftAppTenantId",
-    };
-
     const url: string = `https://login.microsoftonline.com/${MicrosoftAppDetails.TenantId}/oauth2/v2.0/token`;
 
     const body: OathToken = {
